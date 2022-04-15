@@ -1,0 +1,1 @@
+{"version":3,"file":"jsonreaderNFT.d.ts","sourceRoot":"","sources":["../../src/modules/jsonreaderNFT.ts"],"names":[],"mappings":"AAsBA,MAAM,CAAC,OAAO,OAAO,aAAa;IAEhC,OAAO,CAAC,aAAa,CAAmB;IACxC,OAAO,CAAC,aAAa,CAAmC;IACxD,OAAO,CAAC,UAAU,CAAM;IAExB,OAAO,CAAC,gBAAgB;IAKzB,OAAO,CAAC,MAAM;CA2Bd"}
