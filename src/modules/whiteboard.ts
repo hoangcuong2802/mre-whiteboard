@@ -18,12 +18,13 @@ export default class WhiteBoard {
   private drawMaterial: MRE.Material;
   private redDrawMaterial: MRE.Material;
   private drawObjects: MRE.Actor[] = [];
-  private diagramObjects: MRE.Actor;
+  private diagramObjects: MRE.Actor[] = [];
   private icon: MRE.Actor;
   private pointerposition: MRE.PointData;
   private pinpoint : MRE.Actor[] = [];
   private textButton : MRE.Actor;
   private inputText : MRE.Actor;
+  private i = 0;
 
 
   public cleanup() {
@@ -105,7 +106,7 @@ export default class WhiteBoard {
   private eraseDrawObjects() {
     this.drawObjects.forEach(actor => actor.destroy());
     this.drawObjects = [];
-    this.diagramObjects.destroy();
+    //this.diagramObjects.destroy();
     for(let i =0; i< this.pinpoint.length; i++)
     {
       this.pinpoint[i].destroy();
@@ -284,7 +285,7 @@ export default class WhiteBoard {
         },
       });
       iconButton.setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User, ) => {
-        this.diagramObjects =  MRE.Actor.CreateFromGltf(this.assets, {
+        this.diagramObjects[this.i] =  MRE.Actor.CreateFromGltf(this.assets, {
           //uri: `https://cdn-content-ingress.altvr.com/uploads/model/gltf/1975358144481591813/Torus.glb`,
           uri: uri,
           colliderType: "mesh",
@@ -299,7 +300,6 @@ export default class WhiteBoard {
             },
           },
         });
-
         // //Try adding moving with continuous positions
         // this.iconmoveBehavior = this.drawSurface.setBehavior(MRE.ButtonBehavior);
 
@@ -325,7 +325,7 @@ export default class WhiteBoard {
         // });
 
         // Moving with static positions
-        this.diagramObjects.setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User) => {
+        this.diagramObjects[this.i].setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User) => {
           console.log("Get pointer transform");
           this.pinpoint[0] = MRE.Actor.Create(this.context, {
             actor: {
@@ -337,7 +337,7 @@ export default class WhiteBoard {
               },
               transform: {
                 local: {
-                  position: {x:this.diagramObjects.transform.local.position.x + 0.2, y:this.diagramObjects.transform.local.position.y, z:this.diagramObjects.transform.local.position.z}, 
+                  position: {x:this.diagramObjects[this.i].transform.local.position.x + 0.2, y:this.diagramObjects[this.i].transform.local.position.y, z:this.diagramObjects[this.i].transform.local.position.z}, 
                   scale: { x: 1.5, y: 1.5, z: 1.5 },
                 },
               },
@@ -350,7 +350,7 @@ export default class WhiteBoard {
             },
           });
           this.pinpoint[0].setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User) => {
-            this.diagramObjects.transform.local.position.x+= 0.2
+            this.diagramObjects[this.i].transform.local.position.x+= 0.2
             for(let i = 0; i < this.pinpoint.length; i++){
               this.pinpoint[i].transform.local.position.x += 0.2
             }
@@ -366,7 +366,7 @@ export default class WhiteBoard {
               },
               transform: {
                 local: {
-                  position: {x:this.diagramObjects.transform.local.position.x - 0.2, y:this.diagramObjects.transform.local.position.y, z:this.diagramObjects.transform.local.position.z}, 
+                  position: {x:this.diagramObjects[this.i].transform.local.position.x - 0.2, y:this.diagramObjects[this.i].transform.local.position.y, z:this.diagramObjects[this.i].transform.local.position.z}, 
                   scale: { x: 1.5, y: 1.5, z: 1.5 },
                 },
               },
@@ -379,7 +379,7 @@ export default class WhiteBoard {
             },
           });
           this.pinpoint[1].setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User) => {
-            this.diagramObjects.transform.local.position.x-= 0.2
+            this.diagramObjects[this.i].transform.local.position.x-= 0.2
             for(let i = 0; i < this.pinpoint.length; i++){
               this.pinpoint[i].transform.local.position.x -= 0.2
             }
@@ -395,7 +395,7 @@ export default class WhiteBoard {
               },
               transform: {
                 local: {
-                  position: {x:this.diagramObjects.transform.local.position.x, y:this.diagramObjects.transform.local.position.y + 0.25, z:this.diagramObjects.transform.local.position.z}, 
+                  position: {x:this.diagramObjects[this.i].transform.local.position.x, y:this.diagramObjects[this.i].transform.local.position.y + 0.25, z:this.diagramObjects[this.i].transform.local.position.z}, 
                   scale: { x: 1.5, y: 1.5, z: 1.5 },
                 },
               },
@@ -408,7 +408,7 @@ export default class WhiteBoard {
             },
           });
           this.pinpoint[2].setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User) => {
-            this.diagramObjects.transform.local.position.y+= 0.2
+            this.diagramObjects[this.i].transform.local.position.y+= 0.2
             for(let i = 0; i < this.pinpoint.length; i++){
               this.pinpoint[i].transform.local.position.y += 0.2
             }
@@ -424,7 +424,7 @@ export default class WhiteBoard {
               },
               transform: {
                 local: {
-                  position: {x:this.diagramObjects.transform.local.position.x, y:this.diagramObjects.transform.local.position.y - 0.25, z:this.diagramObjects.transform.local.position.z}, 
+                  position: {x:this.diagramObjects[this.i].transform.local.position.x, y:this.diagramObjects[this.i].transform.local.position.y - 0.25, z:this.diagramObjects[this.i].transform.local.position.z}, 
                   scale: { x: 1.5, y: 1.5, z: 1.5 },
                 },
               },
@@ -437,7 +437,7 @@ export default class WhiteBoard {
             },
           });
           this.pinpoint[3].setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User) => {
-            this.diagramObjects.transform.local.position.y-= 0.2
+            this.diagramObjects[this.i].transform.local.position.y-= 0.2
             for(let i = 0; i < this.pinpoint.length; i++){
               this.pinpoint[i].transform.local.position.y -= 0.2
             }
@@ -453,7 +453,7 @@ export default class WhiteBoard {
               },
               transform: {
                 local: {
-                  position: {x:this.diagramObjects.transform.local.position.x, y:this.diagramObjects.transform.local.position.y, z:this.diagramObjects.transform.local.position.z}, 
+                  position: {x:this.diagramObjects[this.i].transform.local.position.x, y:this.diagramObjects[this.i].transform.local.position.y, z:this.diagramObjects[this.i].transform.local.position.z}, 
                   scale: { x: 1.5, y: 1.5, z: 1.5 },
                 },
               },
@@ -466,16 +466,17 @@ export default class WhiteBoard {
             },
           });   
           this.pinpoint[4].setBehavior(MRE.ButtonBehavior).onClick((user: MRE.User) => {
-            this.diagramObjects.transform.local.scale.x+= 0.1
-            this.diagramObjects.transform.local.scale.y+= 0.1
-            if(this.diagramObjects.transform.local.scale.x >= 0.5 || this.diagramObjects.transform.local.scale.y>= 0.5)
+            this.diagramObjects[this.i].transform.local.scale.x+= 0.1
+            this.diagramObjects[this.i].transform.local.scale.y+= 0.1
+            if(this.diagramObjects[this.i].transform.local.scale.x >= 0.5 || this.diagramObjects[this.i].transform.local.scale.y>= 0.5)
             {
-              this.diagramObjects.transform.local.scale.x-= 0.1
-              this.diagramObjects.transform.local.scale.y-= 0.1
+              this.diagramObjects[this.i].transform.local.scale.x-= 0.1
+              this.diagramObjects[this.i].transform.local.scale.y-= 0.1
             }
           })
         })
     })
+    this.i++;
   }
 
   private createTextButton() {
